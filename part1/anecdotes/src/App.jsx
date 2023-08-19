@@ -13,6 +13,7 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const [points, setPoints] = useState(new Uint8Array(8))
 
   const getRandom = () =>{
     const len = anecdotes.length
@@ -20,9 +21,17 @@ const App = () => {
     setSelected(updateRand)
   }
 
+  const addVote = () => {
+    const copy = [...points]
+    copy[selected] += 1
+    setPoints(copy)
+  }
+
   return (
     <div>
       <p>{anecdotes[selected]}</p>
+      <p>has {points[selected]} votes</p>
+      <button onClick={addVote}>vote</button>
       <button onClick={getRandom}>next anecdote</button>
     </div>
   )
