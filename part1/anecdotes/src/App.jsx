@@ -1,5 +1,25 @@
 import { useState } from 'react'
 
+const Button = ({handleClick, text}) => <button onClick={handleClick}>{text}</button>
+const Anecdote = ({anecdotes, selected}) => <p>{anecdotes[selected]}</p>
+const Scores = ({top, points, selected}) => {
+  if (top !== undefined){
+    return <p>has {top} votes</p>
+  }
+  else if (points !== undefined && selected !== undefined) {
+    return <p>has {points[selected]} votes</p>
+  }
+}
+const Title = ({text}) => {
+  if (text === "day") {
+    return(<><h1>Anecdote of the day</h1></>)
+  }
+  else {
+    return(<><h1>Anecdote with the most votes</h1></>)
+  }
+}
+
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -17,7 +37,7 @@ const App = () => {
 
   const topVoted = points.indexOf(Math.max(...points))
   const topScore = Math.max(...points)
-  
+
   const getRandom = () =>{
     const len = anecdotes.length
     const updateRand = Math.floor(Math.random() * (len - 0) + 0)
@@ -32,14 +52,14 @@ const App = () => {
 
   return (
     <div>
-      <h1>Anecdote of the day</h1>
-      <p>{anecdotes[selected]}</p>
-      <p>has {points[selected]} votes</p>
-      <button onClick={addVote}>vote</button>
-      <button onClick={getRandom}>next anecdote</button>
-      <h1>Anecdote with the most votes</h1>
-      <p>{anecdotes[topVoted]}</p>
-      <p>has {topScore} votes</p>
+      <Title text={'day'} />
+      <Anecdote anecdotes={anecdotes} selected={selected} />
+      <Scores points={points} selected={selected} />
+      <Button handleClick={addVote} text={'vote'} />
+      <Button handleClick={getRandom} text={'next anecdote'} />
+      <Title text={'votes'} />
+      <Anecdote anecdotes={anecdotes} selected={topVoted} />
+      <Scores top={topScore} />
     </div>
   )
 }
