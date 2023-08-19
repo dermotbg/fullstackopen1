@@ -13,14 +13,16 @@ const Statistics = ({fig}) => {
   }
   else{
     return(
-      <>
-        <StatisticLine fig={fig.good} stat={'good'}/>
-        <StatisticLine fig={fig.neutral} stat={'neutral'}/>
-        <StatisticLine fig={fig.bad} stat={'bad'}/>
-        <StatisticLine fig={all} stat={'all'}/>
-        <StatisticLine fig={avg} stat={'average'}/>
-        <StatisticLine fig={pos} stat={'positive'}/>
-      </>
+      <table>
+          <tbody>
+            <tr><StatisticLine fig={fig.good} stat={'good'}/></tr>
+            <tr><StatisticLine fig={fig.neutral} stat={'neutral'}/></tr>
+            <tr><StatisticLine fig={fig.bad} stat={'bad'}/></tr>
+            <tr><StatisticLine fig={all} stat={'all'}/></tr>
+            <tr><StatisticLine fig={avg} stat={'average'}/></tr>
+            <tr><StatisticLine fig={pos} stat={'positive'}/></tr>
+          </tbody>
+      </table>
     )
   }
 }
@@ -28,12 +30,18 @@ const Statistics = ({fig}) => {
 const StatisticLine = ({stat, fig}) => {
   if (stat === 'positive'){
       return(
-        <p>{stat} {fig}%</p>
+        <>
+        <td>{stat}</td>
+        <td>{fig}%</td>
+        </>
        )
   }
   else {
     return(
-      <p>{stat} {fig}</p>
+      <>
+        <td>{stat}</td>
+        <td>{fig}</td>
+      </>
     )
     }
 }
