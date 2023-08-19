@@ -2,10 +2,10 @@ import { useState } from 'react'
 
 const Button = ({handleClick, text}) => <button onClick={handleClick}>{text}</button>
 
-const Active = ({fig}) => {
+const Statistics = ({fig}) => {
   const all = fig.good + fig.bad + fig.neutral
   const avg = (fig.good - fig.bad) / 9
-  const pos = ((fig.good / 9)) * 100
+  const pos = (fig.good / all) * 100
   if (all === 0){
     return(
       <p>No feedback given</p>
@@ -14,33 +14,28 @@ const Active = ({fig}) => {
   else{
     return(
       <>
-        <p>good {fig.good}</p>
-        <p>neutral {fig.neutral}</p>
-        <p>bad {fig.bad}</p>
-        <Stats fig={all} stat={'all'}/>
-        <Stats fig={avg} stat={'avg'}/>
-        <Stats fig={pos} stat={'pos'}/>
+        <StatisticLine fig={fig.good} stat={'good'}/>
+        <StatisticLine fig={fig.neutral} stat={'neutral'}/>
+        <StatisticLine fig={fig.bad} stat={'bad'}/>
+        <StatisticLine fig={all} stat={'all'}/>
+        <StatisticLine fig={avg} stat={'average'}/>
+        <StatisticLine fig={pos} stat={'positive'}/>
       </>
     )
   }
 }
 
-const Stats = ({stat, fig}) => {
-  if (stat === 'all'){
-   return(
-    <p>all {fig}</p>
-   )
-  }
-  else if (stat === 'avg'){
-    return(
-      <p>average {fig}</p>
-     )
+const StatisticLine = ({stat, fig}) => {
+  if (stat === 'positive'){
+      return(
+        <p>{stat} {fig}%</p>
+       )
   }
   else {
     return(
-      <p>positive {fig}%</p>
-     )
-  }
+      <p>{stat} {fig}</p>
+    )
+    }
 }
 
 const App = () => {
@@ -67,7 +62,7 @@ const App = () => {
       <Button handleClick={handleNeutralClick} text={'neutral'}/>
       <Button handleClick={handleBadClick} text={'bad'}/>
       <h1>statistics</h1>
-      <Active fig={scores}/>
+      <Statistics fig={scores}/>
     </div>
   )
 }
